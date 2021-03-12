@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-class User {
+use JsonSerializable;
+
+class User implements JsonSerializable {
 
     private int $id;
 
@@ -76,4 +78,7 @@ class User {
         $this->avatar = $avatar;
     }
 
+    public function jsonSerialize() : array {
+        return get_object_vars($this);
+    }
 }

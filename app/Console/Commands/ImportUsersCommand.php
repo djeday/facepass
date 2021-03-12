@@ -34,7 +34,7 @@ class ImportUsersCommand extends Command
         try {
             $importUsersFacade = new UserFacade(new UserRepository(), new FacebookUserRepository());
             $this->info($importUsersFacade->importUsers() . ' users successful imported');
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $this->info($ex->getMessage());
         }
     }
