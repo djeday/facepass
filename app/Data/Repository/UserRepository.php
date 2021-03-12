@@ -2,9 +2,11 @@
 
 namespace App\Data\Repository;
 
+use App\Data\Database\ActiveRecords\UserActiveRecord;
 use App\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
-use App\Exceptions\NotSupportedException;
+
+use App\Mappers\UserActiveRecordToUserMapper;
 use App\Mappers\UserToUserActiveRecordMapper;
 use Exception;
 
@@ -23,20 +25,26 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * @return User[]
-     * @throws NotSupportedException
+     * @throws Exception
      */
     public function getAllUsers(): array
     {
-        throw new NotSupportedException("Method not supported");
+        $userModels = UserActiveRecord::all();
+        $mapper = new UserActiveRecordToUserMapper();
+
+        return $mapper->transformMultipleRecords($userModels);
     }
 
     /**
      * @param int $id
      * @return User
-     * @throws NotSupportedException
+     * @throws Exception
      */
     public function getUserById(int $id): User
     {
-        throw new NotSupportedException("Method not supported");
+        $userModel = UserActiveRecord::all()->find($id);
+        $mapper = new UserActiveRecordToUserMapper();
+
+        return $mapper->transformOneRecord($userModel);
     }
 }
