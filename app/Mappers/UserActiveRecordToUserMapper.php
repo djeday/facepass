@@ -4,6 +4,7 @@ namespace App\Mappers;
 
 use App\Entity\User;
 use App\Data\Database\ActiveRecords\UserActiveRecord;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserActiveRecordToUserMapper
 {
@@ -24,10 +25,10 @@ class UserActiveRecordToUserMapper
     }
 
     /**
-     * @param UserActiveRecord[] $userModels
+     * @param Collection $userModels
      * @return User[]
      */
-    public function transformMultipleRecords(array $userModels): array
+    public function transformMultipleRecords(Collection $userModels): array
     {
         $users = [];
         foreach ($userModels as $userModel) {

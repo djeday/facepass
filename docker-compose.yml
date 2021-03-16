@@ -1,0 +1,29 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+    - php-fpm
+  php-fpm:
+    build: docker/php
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    ports:
+    - 3307:3306 # проброс портов mysql для доступа снаружи
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      MYSQL_DATABASE: mysql
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: root
